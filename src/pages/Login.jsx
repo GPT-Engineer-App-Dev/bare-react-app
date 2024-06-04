@@ -1,8 +1,8 @@
 import { Box, Container, Flex, Text, VStack, Link, Button } from "@chakra-ui/react";
-import { useSupabaseAuth } from "../integrations/supabase/auth.jsx";
+import { SupabaseAuthUI, useSupabaseAuth } from "../integrations/supabase/auth.jsx";
 import { useNavigate } from "react-router-dom";
 
-const Index = () => {
+const Login = () => {
   const { session, logout } = useSupabaseAuth();
   const navigate = useNavigate();
 
@@ -19,18 +19,20 @@ const Index = () => {
           <Link href="/" p={2}>Home</Link>
           <Link href="/about" p={2}>About</Link>
           <Link href="/contact" p={2}>Contact</Link>
-          {session ? (
-            <Button onClick={handleLogout} ml={2}>Logout</Button>
-          ) : (
-            <Link href="/login" p={2}>Login</Link>
-          )}
         </Flex>
       </Flex>
 
       <Box as="main" flex="1" p={4}>
         <VStack spacing={4}>
-          <Text fontSize="2xl">Welcome to My Website</Text>
-          <Text>This is a simple React app with a basic structure.</Text>
+          <Text fontSize="2xl">Login</Text>
+          {session ? (
+            <>
+              <Text>You are logged in.</Text>
+              <Button onClick={handleLogout}>Logout</Button>
+            </>
+          ) : (
+            <SupabaseAuthUI />
+          )}
         </VStack>
       </Box>
 
@@ -41,4 +43,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Login;
